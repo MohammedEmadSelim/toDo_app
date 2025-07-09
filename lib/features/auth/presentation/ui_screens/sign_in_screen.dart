@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/button_login.dart';
 import 'package:to_do_app/core/utiles/widgets/field_login.dart';
-// import 'package:to_do_app/features/auth/presentation/ui_screens/forget_pas_screen.dart';
+import 'package:to_do_app/features/auth/presentation/ui_screens/forget_pas_screen.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/sign_up_screen.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -32,11 +32,11 @@ class SignInScreen extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const ForgetPassScreen()),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ForgetPassScreen()),
+                    );
                   },
                   child: Text(
                     "Forgot Password?",
