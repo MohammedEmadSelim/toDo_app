@@ -6,6 +6,7 @@ import 'package:to_do_app/core/utiles/widgets/custom_field.dart';
 import 'package:to_do_app/features/auth/presentation/component/logo.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/forget_password_screen.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/signup_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
