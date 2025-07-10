@@ -1,8 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_app/core/responsive/responsive_extention.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/custom_field.dart';
+import 'package:to_do_app/core/utiles/widgets/custom_text.dart';
+import 'package:to_do_app/features/auth/presentation/components/custom_auth_button.dart';
+import 'package:to_do_app/features/auth/presentation/components/logo.dart';
+import 'package:to_do_app/features/auth/presentation/ui_screens/sign_up_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -18,97 +22,7 @@ class LoginScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 3.w),
         child: Column(
           children: [
-            SizedBox(
-              height: 10.h,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        HeadLineText(
-                          data: 'T',
-                        ),
-                        SizedBox(
-                          width: 7.w,
-                        ),
-                        HeadLineText(
-                          data: 'O',
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        HeadLineText(
-                          data: 'D',
-                        ),
-                        SizedBox(
-                          width: 7.w,
-                        ),
-                        HeadLineText(
-                          data: 'O',
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        HeadLineText(
-                          data: 'L',
-                        ),
-                        SizedBox(
-                          width: 7.w,
-                        ),
-                        HeadLineText(
-                          data: 'I',
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SvgPicture.asset('assets/icons/mobile_tech.svg'),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        HeadLineText(
-                          data: 'S',
-                        ),
-                        SizedBox(
-                          width: 7.w,
-                        ),
-                        HeadLineText(
-                          data: 'T',
-                        )
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
-            SizedBox(
-              height: 7.h,
-            ),
+            Logo(),
             CustomTextFormField(
               controller: emailController,
               hint: 'email',
@@ -119,7 +33,45 @@ class LoginScreen extends StatelessWidget {
             CustomTextFormField(
               controller: passwordController,
               hint: 'password',
+              isPassword: true,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                    onPressed: () {},
+                    child: CustomText(data: 'forget_password'.tr()))
+              ],
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            CustomAuthButton(
+              onTap: () {},
+              data: 'sign_in'.tr(),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  style: ButtonStyle(
+                      padding: WidgetStatePropertyAll(EdgeInsets.zero)),
+                  child: CustomText(data: 'dont_have_an_account'.tr()),
+                  onPressed: () {},
+                ),
+                TextButton(
+                  style: ButtonStyle(
+                      padding: WidgetStatePropertyAll(EdgeInsets.zero)),
+                  child: CustomText(
+                    data: 'sign_up'.tr(),
+                    color: AppColors.bink,
+                  ),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen(),));
+                  },
+                )
+              ],
+            )
           ],
         ),
       ),

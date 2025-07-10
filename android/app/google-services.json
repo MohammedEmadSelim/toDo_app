@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:32335541468:android:bd4c19fd81fec6da977019",
+        "mobilesdk_app_id": "1:32335541468:android:5c2822700334c2d1977019",
         "android_client_info": {
-          "package_name": "com.nti.to_do_app"
+          "package_name": "com.example.test_local"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "32335541468-fddr44o592ta1ap8j8b3gaa3b9an4j3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBqWYkQx0exYpiENgtPX96P72kK2GHqjeE"
@@ -20,7 +25,55 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32335541468-fddr44o592ta1ap8j8b3gaa3b9an4j3r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "32335541468-317g41b5afmj2kil9nbcvp5u0aihaeq1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nti.toDoApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32335541468:android:bd4c19fd81fec6da977019",
+        "android_client_info": {
+          "package_name": "com.nti.to_do_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32335541468-fddr44o592ta1ap8j8b3gaa3b9an4j3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqWYkQx0exYpiENgtPX96P72kK2GHqjeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32335541468-fddr44o592ta1ap8j8b3gaa3b9an4j3r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "32335541468-317g41b5afmj2kil9nbcvp5u0aihaeq1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nti.toDoApp"
+              }
+            }
+          ]
         }
       }
     }
