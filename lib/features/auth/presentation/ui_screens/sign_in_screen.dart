@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/button_login.dart';
@@ -20,11 +21,11 @@ class SignInScreen extends StatelessWidget {
             ),
             Image.asset("assets/logo.png"),
             CustomTextField(
-              labelText: 'Email',
+              labelText: 'email',
               keyboardType: TextInputType.emailAddress,
             ),
             CustomTextField(
-              labelText: 'Password',
+              labelText: 'password',
               isPassword: true,
             ),
             Row(
@@ -32,29 +33,30 @@ class SignInScreen extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const ForgetPassScreen()),
                     );
                   },
                   child: Text(
-                    "Forgot Password?",
+                    "forgot_Password?".tr(),
                     style: TextStyle(color: AppColores().textColor),
                   ),
                 )
               ],
             ),
             ButtonLogin(
-                text: "SIGN IN",
+                text: "sign_in",
                 onPressed: () {
+                  context.setLocale(Locale('ar'));
                   print("SIGN IN👌");
                 }),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Don't have an account?",
+                  "don't_have_an_account?".tr(),
                   style: TextStyle(color: AppColores().textColor),
                 ),
                 TextButton(
@@ -66,11 +68,26 @@ class SignInScreen extends StatelessWidget {
                     );
                   },
                   child: Text(
-                    "Sign up",
+                    "sign_up".tr(),
                     style: TextStyle(color: AppColores().mainColor),
                   ),
                 )
               ],
+            ),
+
+            // test Buttons to translate lang
+
+            ElevatedButton(
+              onPressed: () {
+                context.setLocale(Locale('ar'));
+              },
+              child: Text('Switch to Arabic'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.setLocale(Locale('en'));
+              },
+              child: Text('Switch to English'),
             ),
           ],
         ),

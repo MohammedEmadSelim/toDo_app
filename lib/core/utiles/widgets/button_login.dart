@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 
@@ -26,7 +27,7 @@ class ButtonLogin extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 15),
         ),
         child: Text(
-          text,
+          text.tr(),
           style: const TextStyle(
             color: Colors.white,
             fontSize: 17,

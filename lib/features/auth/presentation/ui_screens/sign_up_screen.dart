@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/button_login.dart';
@@ -19,23 +20,23 @@ class SignUpScreen extends StatelessWidget {
             ),
             Image.asset("assets/logo.png"),
             CustomTextField(
-              labelText: 'Email',
+              labelText: 'email'.tr(),
               keyboardType: TextInputType.emailAddress,
             ),
             CustomTextField(
-              labelText: 'Full Name',
+              labelText: "full_name".tr(),
               keyboardType: TextInputType.emailAddress,
             ),
             CustomTextField(
-              labelText: 'Password',
+              labelText: "password".tr(),
               isPassword: true,
             ),
             CustomTextField(
-              labelText: 'Confirm Password',
+              labelText: "confirm_Password".tr(),
               isPassword: true,
             ),
             ButtonLogin(
-                text: "SIGN UP",
+                text: "sign_up".tr(),
                 onPressed: () {
                   print("SIGN UP👍");
                 }),
@@ -43,7 +44,7 @@ class SignUpScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Have an account?",
+                  "have_an_account?".tr(),
                   style: TextStyle(color: AppColores().textColor),
                 ),
                 TextButton(
@@ -55,7 +56,7 @@ class SignUpScreen extends StatelessWidget {
                     );
                   },
                   child: Text(
-                    "Log in",
+                    "sign_in".tr(),
                     style: TextStyle(color: AppColores().mainColor),
                   ),
                 )

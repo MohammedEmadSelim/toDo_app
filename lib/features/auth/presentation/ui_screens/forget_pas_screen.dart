@@ -1,9 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/button_login.dart';
 import 'package:to_do_app/core/utiles/widgets/field_login.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/sign_in_screen.dart';
-import 'package:to_do_app/features/auth/presentation/ui_screens/sign_up_screen.dart';
 
 class ForgetPassScreen extends StatelessWidget {
   const ForgetPassScreen({super.key});
@@ -12,6 +12,7 @@ class ForgetPassScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColores().background,
+      appBar: AppBar(),
       body: Center(
         child: ListView(
           children: [
@@ -24,7 +25,7 @@ class ForgetPassScreen extends StatelessWidget {
               isPassword: true,
             ),
             CustomTextField(
-              labelText: 'Confirm Password',
+              labelText: 'confirm_Password'.tr(),
               isPassword: true,
             ),
             SizedBox(

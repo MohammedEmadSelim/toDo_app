@@ -1,0 +1,11 @@
+{
+    "sign_in":"تسجيل الدخول",
+    "sign_up":"انشاء حساب",
+    "email":"ايميل",
+    "password":"كلمه السر",
+    "forgot_Password?":"نسيت كلمه السر ؟",
+    "don't_have_an_account?":"هل لديك حساب ؟",
+    "full_name":"الاسم بالكامل",
+    "confirm_Password":" تاكيد كلمه السر",
+    "have_an_account?":"هل ليك حساب ؟"
+}
