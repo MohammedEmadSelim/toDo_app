@@ -69,7 +69,6 @@ class _SignInScreenState extends State<SignInScreen> {
               ButtonLogin(
                   text: "sign_in",
                   onPressed: () {
-                    context.setLocale(const Locale('ar'));
                     print("SIGN IN👌");
                   }),
               Row(
