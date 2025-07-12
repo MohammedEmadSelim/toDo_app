@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/button_login.dart';
 import 'package:to_do_app/core/utiles/widgets/field_login.dart';
@@ -18,7 +19,7 @@ class SignUpScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Image.asset("assets/logo.png"),
+            SvgPicture.asset("assets/logo.svg"),
             CustomTextField(
               labelText: 'email'.tr(),
               keyboardType: TextInputType.emailAddress,
