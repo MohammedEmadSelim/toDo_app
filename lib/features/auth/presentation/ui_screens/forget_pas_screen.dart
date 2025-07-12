@@ -5,8 +5,26 @@ import 'package:to_do_app/core/utiles/widgets/button_login.dart';
 import 'package:to_do_app/core/utiles/widgets/field_login.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/sign_in_screen.dart';
 
-class ForgetPassScreen extends StatelessWidget {
+class ForgetPassScreen extends StatefulWidget {
   const ForgetPassScreen({super.key});
+
+  @override
+  State<ForgetPassScreen> createState() => _ForgetPassScreenState();
+}
+
+class _ForgetPassScreenState extends State<ForgetPassScreen> {
+  double _opacity = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    // بدء الأنميشن بعد أول فريم
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _opacity = 1.0;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,34 +32,37 @@ class ForgetPassScreen extends StatelessWidget {
       backgroundColor: AppColores().background,
       appBar: AppBar(),
       body: Center(
-        child: ListView(
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Image.asset("assets/logo.png"),
-            CustomTextField(
-              labelText: 'Password',
-              isPassword: true,
-            ),
-            CustomTextField(
-              labelText: 'confirm_Password'.tr(),
-              isPassword: true,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            ButtonLogin(
+        child: AnimatedOpacity(
+          duration: const Duration(seconds: 1),
+          opacity: _opacity,
+          curve: Curves.easeIn,
+          child: ListView(
+            children: [
+              const SizedBox(height: 10),
+              Image.asset("assets/logo.png"),
+              CustomTextField(
+                labelText: 'Password',
+                isPassword: true,
+              ),
+              CustomTextField(
+                labelText: 'confirm_Password'.tr(),
+                isPassword: true,
+              ),
+              const SizedBox(height: 5),
+              ButtonLogin(
                 text: "CHANGE PASSWORD",
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SignInScreen()),
+                      builder: (context) => const SignInScreen(),
+                    ),
                   );
                   print("CHANGE PASSWORD👌");
-                }),
-          ],
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

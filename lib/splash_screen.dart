@@ -25,7 +25,18 @@ class _SplashScreenState extends State<SplashScreen> {
       Future.delayed(const Duration(seconds: 3), () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const SignInScreen()),
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 1500),
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const SignInScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+          ),
         );
       });
     });

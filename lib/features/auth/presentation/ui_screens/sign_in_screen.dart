@@ -6,90 +6,108 @@ import 'package:to_do_app/core/utiles/widgets/field_login.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/forget_pas_screen.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/sign_up_screen.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  double _opacity = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    // بعد أول فريم، نبدأ الأنميشن
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _opacity = 1.0;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColores().background,
       body: Center(
-        child: ListView(
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Image.asset("assets/logo.png"),
-            CustomTextField(
-              labelText: 'email',
-              keyboardType: TextInputType.emailAddress,
-            ),
-            CustomTextField(
-              labelText: 'password',
-              isPassword: true,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
+        child: AnimatedOpacity(
+          duration: const Duration(seconds: 1),
+          opacity: _opacity,
+          curve: Curves.easeIn,
+          child: ListView(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+              Image.asset("assets/logo.png"),
+              CustomTextField(
+                labelText: 'email',
+                keyboardType: TextInputType.emailAddress,
+              ),
+              CustomTextField(
+                labelText: 'password',
+                isPassword: true,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ForgetPassScreen()),
+                      );
+                    },
+                    child: Text(
+                      "forgot_Password?".tr(),
+                      style: TextStyle(color: AppColores().textColor),
+                    ),
+                  )
+                ],
+              ),
+              ButtonLogin(
+                  text: "sign_in",
                   onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ForgetPassScreen()),
-                    );
-                  },
-                  child: Text(
-                    "forgot_Password?".tr(),
+                    context.setLocale(const Locale('ar'));
+                    print("SIGN IN👌");
+                  }),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "don't_have_an_account?".tr(),
                     style: TextStyle(color: AppColores().textColor),
                   ),
-                )
-              ],
-            ),
-            ButtonLogin(
-                text: "sign_in",
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignUpScreen()),
+                      );
+                    },
+                    child: Text(
+                      "sign_up".tr(),
+                      style: TextStyle(color: AppColores().mainColor),
+                    ),
+                  )
+                ],
+              ),
+              ElevatedButton(
                 onPressed: () {
-                  context.setLocale(Locale('ar'));
-                  print("SIGN IN👌");
-                }),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "don't_have_an_account?".tr(),
-                  style: TextStyle(color: AppColores().textColor),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SignUpScreen()),
-                    );
-                  },
-                  child: Text(
-                    "sign_up".tr(),
-                    style: TextStyle(color: AppColores().mainColor),
-                  ),
-                )
-              ],
-            ),
-
-            // test Buttons to translate lang
-
-            ElevatedButton(
-              onPressed: () {
-                context.setLocale(Locale('ar'));
-              },
-              child: Text('Switch to Arabic'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.setLocale(Locale('en'));
-              },
-              child: Text('Switch to English'),
-            ),
-          ],
+                  context.setLocale(const Locale('ar'));
+                },
+                child: const Text('Switch to Arabic'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  context.setLocale(const Locale('en'));
+                },
+                child: const Text('Switch to English'),
+              ),
+            ],
+          ),
         ),
       ),
     );
