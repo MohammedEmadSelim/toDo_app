@@ -1,11 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app/core/responsive/responsive_extention.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/custom_field.dart';
 import 'package:to_do_app/core/utiles/widgets/custom_text.dart';
+import 'package:to_do_app/core/validator/app_validator.dart';
 import 'package:to_do_app/features/auth/presentation/components/custom_auth_button.dart';
 import 'package:to_do_app/features/auth/presentation/components/logo.dart';
+import 'package:to_do_app/features/auth/presentation/controllers/sign_up_cubit/sign_up_cubit.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
@@ -15,106 +18,115 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Column(
-          children: [
-            const Logo(),
-            SizedBox(
-              height: 2.h,
-            ),
-            CustomTextFormField(
-                controller: fullNameController, hint: 'full_name'.tr()),
-            SizedBox(
-              height: 1.h,
-            ),
-            CustomTextFormField(
-                controller: emailController, hint: 'email'.tr()),
-            SizedBox(
-              height: 1.h,
-            ),
-            CustomTextFormField(
-              controller: passwordController,
-              hint: 'password'.tr(),
-              isPassword: true,
-            ),
-            SizedBox(
-              height: 1.h,
-            ),
-            CustomTextFormField(
-              controller: confirmPasswordController,
-              hint: 'confirm_password'.tr(),
-              isPassword: true,
-            ),
-            SizedBox(
-              height: 2.h,
-            ),
-            CustomAuthButton(
-              data: 'sign_up',
-              onTap: () {},
-            ),
-            SizedBox(
-              height: 2.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return BlocProvider(
+      create: (context) => SignUpCubit(),
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Form(
+            key: formKey,
+            child: Column(
               children: [
-                TextButton(
-                  style: ButtonStyle(
-                      padding: WidgetStatePropertyAll(EdgeInsets.zero)),
-                  child: CustomText(data: 'have_an_account'.tr()),
-                  onPressed: () {},
+                const Logo(),
+                SizedBox(
+                  height: 2.h,
                 ),
-                TextButton(
-                  style: ButtonStyle(
-                      padding: WidgetStatePropertyAll(EdgeInsets.zero)),
-                  child: CustomText(
-                    data: 'login'.tr(),
-                    color: AppColors.bink,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SignUpScreen(),
-                        ));
+                CustomTextFormField(
+                    validators: (value) =>
+                        AppValidator.validateName(value ?? ''),
+                    controller: fullNameController,
+                    hint: 'full_name'.tr()),
+                SizedBox(
+                  height: 1.h,
+                ),
+                CustomTextFormField(
+                    validators: (value) => AppValidator.emailName(value),
+                    controller: emailController,
+                    hint: 'email'.tr()),
+                SizedBox(
+                  height: 1.h,
+                ),
+                CustomTextFormField(
+                  validators: (value) => AppValidator.passwordValidation(value),
+                  controller: passwordController,
+                  hint: 'password'.tr(),
+                  isPassword: true,
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                CustomTextFormField(
+                  validators: (value) => AppValidator.passwordConfirmValidation(
+                      value, passwordController.text),
+                  controller: confirmPasswordController,
+                  hint: 'confirm_password'.tr(),
+                  isPassword: true,
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                BlocConsumer<SignUpCubit, SignUpState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                    if(state is SignUpFailure)
+                      {
+                        showDialog(context: context, builder: (context) => AlertDialog(
+                          title: Text('Error',),
+                          content: Text(state.message),
+                        ),);
+                      }
+                  },
+                  builder: (context, state) {
+                    return CustomAuthButton(
+                      data: 'sign_up',
+                      onTap: () {
+                        //jkn
+                        // if (formKey.currentState!.validate()) {
+                          print('object');
+                          context.read<SignUpCubit>().signUpWithFirebase(
+                              emailController.text, passwordController.text);
+                        // }
+                      },
+                    );
                   },
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text('this is Dilag'),
-                          content: Text('this is testing app dialog'),
-                          actions: [
-                            ElevatedButton(
-                                onPressed: () {}, child: Text('confirm')),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                'cancel',
-                                style: TextStyle(color: Colors.red),
-                              ),
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      WidgetStatePropertyAll(Colors.red[300])),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    child: Text('show dial'))
+                SizedBox(
+                  height: 2.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      style: ButtonStyle(
+                          padding: WidgetStatePropertyAll(EdgeInsets.zero)),
+                      child: CustomText(data: 'have_an_account'.tr()),
+                      onPressed: () {},
+                    ),
+                    TextButton(
+                      style: ButtonStyle(
+                          padding: WidgetStatePropertyAll(EdgeInsets.zero)),
+                      child: CustomText(
+                        data: 'login'.tr(),
+                        color: AppColors.bink,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignUpScreen(),
+                            ));
+                      },
+                    ),
+                  ],
+                )
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );

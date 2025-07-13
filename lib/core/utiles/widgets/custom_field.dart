@@ -6,11 +6,18 @@ import 'package:to_do_app/core/themes/app_colores.dart';
 
 class CustomTextFormField extends StatefulWidget {
   CustomTextFormField(
-      {super.key, required this.controller, required this.hint,  this.isPassword=false});
+      {super.key,
+      required this.controller,
+      required this.hint,
+      this.isPassword = false,
+      this.keyboardType,
+       this.validators});
 
   final TextEditingController controller;
   final String hint;
   final bool? isPassword;
+  final TextInputType? keyboardType;
+  final String? Function(String?)? validators;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -22,24 +29,24 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-
+      validator:  widget.validators,
       obscureText: isVisible,
-      keyboardType: TextInputType.visiblePassword,
+      keyboardType: widget.keyboardType ?? TextInputType.visiblePassword,
       controller: widget.controller,
       decoration: InputDecoration(
-        suffixIcon:
-            widget.isPassword!? GestureDetector(
-               onTap: () {
-                 isVisible =!isVisible;
-                 setState(() {
-                 });
-               },
-               child: SvgPicture.asset(
-               isVisible? IconsConstants.visible:IconsConstants.unVisible,
-                height: 1.h,
-                fit: BoxFit.none,
-                           ),
-             ):null,
+        suffixIcon: widget.isPassword!
+            ? GestureDetector(
+                onTap: () {
+                  isVisible = !isVisible;
+                  setState(() {});
+                },
+                child: SvgPicture.asset(
+                  isVisible ? IconsConstants.visible : IconsConstants.unVisible,
+                  height: 1.h,
+                  fit: BoxFit.none,
+                ),
+              )
+            : null,
         hintText: widget.hint,
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         border: OutlineInputBorder(

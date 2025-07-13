@@ -38,6 +38,9 @@ dependencies:
 #  flutter_native_splash: ^2.4.4
   flutter_svg: ^2.2.0
   easy_localization: ^3.0.7+1
+  firebase_auth: ^5.6.2
+  flutter_bloc: ^9.1.1
+  dart_either: ^2.0.0
 
 dev_dependencies:
   flutter_test:
