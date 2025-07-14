@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/sign_in_screen.dart';
@@ -22,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
         _opacity = 1.0;
       });
 
-      Future.delayed(const Duration(seconds: 3), () {
+      Future.delayed(const Duration(seconds: 2), () {
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(

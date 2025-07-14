@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do_app/features/auth/presentation/ui_screens/sign_in_screen.dart';
 import 'package:to_do_app/splash_screen.dart';
 
 void main() async {

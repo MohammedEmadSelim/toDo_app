@@ -1,8 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/button_login.dart';
 import 'package:to_do_app/core/utiles/widgets/field_login.dart';
+import 'package:to_do_app/features/auth/presentation/custom_app_bar.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/sign_in_screen.dart';
 
 class ForgetPassScreen extends StatefulWidget {
@@ -30,7 +33,9 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColores().background,
-      appBar: AppBar(),
+      appBar: CustomAppBar(
+        reloadPage: ForgetPassScreen(),
+      ),
       body: Center(
         child: AnimatedOpacity(
           duration: const Duration(seconds: 1),
@@ -41,7 +46,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
               const SizedBox(height: 10),
               Image.asset("assets/logo.png"),
               CustomTextField(
-                labelText: 'Password',
+                labelText: 'password'.tr(),
                 isPassword: true,
               ),
               CustomTextField(
@@ -50,9 +55,9 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
               ),
               const SizedBox(height: 5),
               ButtonLogin(
-                text: "CHANGE PASSWORD",
+                text: "change_password".tr(),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const SignInScreen(),
