@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -50,19 +47,30 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBqWYkQx0exYpiENgtPX96P72kK2GHqjeE',
-    appId: '1:32335541468:android:bd4c19fd81fec6da977019',
-    messagingSenderId: '32335541468',
-    projectId: 'todo-b44e6',
-    storageBucket: 'todo-b44e6.firebasestorage.app',
+    apiKey: 'AIzaSyCdb3_PlXof9huJNmzWRgbwmB0eGWKi1UU',
+    appId: '1:1074540941339:android:23d305e157886df2e328be',
+    messagingSenderId: '1074540941339',
+    projectId: 'flutter-proj-12a36',
+    storageBucket: 'flutter-proj-12a36.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDFDxYRBH61GyXr2ujtwbsJej5HQAgZmzE',
-    appId: '1:32335541468:ios:209af194100dc04c977019',
-    messagingSenderId: '32335541468',
-    projectId: 'todo-b44e6',
-    storageBucket: 'todo-b44e6.firebasestorage.app',
+    apiKey: 'AIzaSyCoaKwf7Y2NTbprKzKGUUlPinG25izU59s',
+    appId: '1:1074540941339:ios:df2872f289841b60e328be',
+    messagingSenderId: '1074540941339',
+    projectId: 'flutter-proj-12a36',
+    storageBucket: 'flutter-proj-12a36.firebasestorage.app',
     iosBundleId: 'com.nti.toDoApp',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBnSgFS10x9aZ-ddxnXU1WsBw6woVPffG0',
+    appId: '1:1074540941339:web:63f0843884414e27e328be',
+    messagingSenderId: '1074540941339',
+    projectId: 'flutter-proj-12a36',
+    authDomain: 'flutter-proj-12a36.firebaseapp.com',
+    storageBucket: 'flutter-proj-12a36.firebasestorage.app',
+    measurementId: 'G-0XDNEX3T54',
+  );
+
 }

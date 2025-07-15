@@ -1,4 +1,16 @@
 {
-    "hello": "hello",
-    "name": "Hedra"
+    "forget_password": "Forgot Password?",
+    "sign_in": "SIGN IN",
+    "sign_up": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "forgot_password": "Forgot Password?",
+    "dont_have_an_account": "Don't have an account?",
+    "log_in": "Log in",
+    "full_name": "Full Name",
+    "have_an_account": "Have an account?",
+    "name_invalid": "Please enter your full name (e.g., John Doe)",
+    "email_invalid": "Please enter a valid email address (e.g., user@example.com)",
+    "password_invalid": "Password must be at least 8 characters long,\ninclude upper & lower case letters,\na number, and a special character.",
+    "passwords_not_match": "Passwords do not match"
 }

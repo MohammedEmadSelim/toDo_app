@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:to_do_app/core/constants/icons_constants.dart';
+import 'package:to_do_app/core/responsive/responsive_extention.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 
 class CustomTextFormField extends StatefulWidget {
@@ -7,11 +9,15 @@ class CustomTextFormField extends StatefulWidget {
       {super.key,
       required this.controller,
       required this.hint,
-      required this.isPassword});
+      this.isPassword = false,
+      this.keyboardType,
+       this.validators});
 
   final TextEditingController controller;
   final String hint;
-  final bool isPassword;
+  final bool? isPassword;
+  final TextInputType? keyboardType;
+  final String? Function(String?)? validators;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -23,24 +29,21 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: widget.isPassword ? !isVisible : false,
-      keyboardType: widget.isPassword
-          ? TextInputType.visiblePassword
-          : TextInputType.text,
+      validator:  widget.validators,
+      obscureText: isVisible,
+      keyboardType: widget.keyboardType ?? TextInputType.visiblePassword,
       controller: widget.controller,
       decoration: InputDecoration(
-        suffixIcon: widget.isPassword
+        suffixIcon: widget.isPassword!
             ? GestureDetector(
                 onTap: () {
-                  setState(() {
-                    isVisible = !isVisible;
-                  });
+                  isVisible = !isVisible;
+                  setState(() {});
                 },
                 child: SvgPicture.asset(
-                  isVisible
-                      ? 'assets/Icons/Eye.svg'
-                      : 'assets/Icons/eye-off.svg',
-                  fit: BoxFit.scaleDown,
+                  isVisible ? IconsConstants.visible : IconsConstants.unVisible,
+                  height: 1.h,
+                  fit: BoxFit.none,
                 ),
               )
             : null,
