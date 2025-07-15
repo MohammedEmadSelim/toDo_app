@@ -1,7 +1,7 @@
-import 'package:to_do_app/core/responsive/responsice_calculation.dart';
+// import 'package:to_do_app/core/responsive/responsice_calculation.dart';
 
-extension ResponsiveExtention on num {
-  double get h => ResponsiveCalculation.calculateHeight(this.toDouble());
+// extension ResponsiveExtention on num {
+//   double get h => ResponsiveCalculation.calculateHeight(this.toDouble());
 
-  double get w => ResponsiveCalculation.calculateWidth(this.toDouble());
-}
+//   double get w => ResponsiveCalculation.calculateWidth(this.toDouble());
+// }

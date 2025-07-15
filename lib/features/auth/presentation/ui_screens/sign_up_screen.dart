@@ -2,11 +2,14 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/button_login.dart';
 import 'package:to_do_app/core/utiles/widgets/field_login.dart';
-import 'package:to_do_app/features/auth/presentation/custom_app_bar.dart';
+import 'package:to_do_app/core/validator/app_validator.dart';
+import 'package:to_do_app/features/auth/presentation/components/custom_app_bar.dart';
+import 'package:to_do_app/features/auth/presentation/controllers/sign_up_cubit/sign_up_cubit.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/sign_in_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -30,70 +33,118 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColores().background,
-      appBar: CustomAppBar(
-        reloadPage: SignUpScreen(),
-      ),
-      body: Center(
-        child: AnimatedOpacity(
-          duration: const Duration(seconds: 1), // مدة الأنميشن
-          opacity: _opacity,
-          curve: Curves.easeIn,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-                SvgPicture.asset("assets/logo.svg"),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                CustomTextField(
-                  labelText: 'email'.tr(),
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                CustomTextField(
-                  labelText: "full_name".tr(),
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                CustomTextField(
-                  labelText: "password".tr(),
-                  isPassword: true,
-                ),
-                CustomTextField(
-                  labelText: "confirm_Password".tr(),
-                  isPassword: true,
-                ),
-                ButtonLogin(
-                  text: "sign_up".tr(),
-                  onPressed: () {
-                    print("SIGN UP👍");
-                  },
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+    return BlocProvider(
+      create: (context) => SignUpCubit(),
+      child: Scaffold(
+        backgroundColor: AppColores().background,
+        appBar: CustomAppBar(
+          reloadPage: SignUpScreen(),
+        ),
+        body: Center(
+          child: AnimatedOpacity(
+            duration: const Duration(seconds: 1), // مدة الأنميشن
+            opacity: _opacity,
+            curve: Curves.easeIn,
+            child: SingleChildScrollView(
+              child: Form(
+                key: formKey,
+                child: Column(
                   children: [
-                    Text(
-                      "have_an_account?".tr(),
-                      style: TextStyle(color: AppColores().textColor),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+                    SvgPicture.asset("assets/logo.svg"),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                    CustomTextField(
+                      labelText: 'email'.tr(),
+                      keyboardType: TextInputType.emailAddress,
+                      validators: (value) => AppValidator.emailName(value),
+                      controller: emailController,
                     ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignInScreen(),
-                          ),
+                    CustomTextField(
+                      labelText: "full_name".tr(),
+                      keyboardType: TextInputType.emailAddress,
+                      validators: (value) =>
+                          AppValidator.validateName(value ?? ''),
+                      controller: fullNameController,
+                    ),
+                    CustomTextField(
+                      labelText: "password".tr(),
+                      isPassword: true,
+                      validators: (value) =>
+                          AppValidator.passwordValidation(value),
+                      controller: passwordController,
+                    ),
+                    CustomTextField(
+                      labelText: "confirm_Password".tr(),
+                      isPassword: true,
+                      validators: (value) =>
+                          AppValidator.passwordConfirmValidation(
+                              value, passwordController.text),
+                      controller: confirmPasswordController,
+                    ),
+                    BlocConsumer<SignUpCubit, SignUpState>(
+                      listener: (context, state) {
+                        // TODO: implement listener
+                        if (state is SignUpFailure) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text(
+                                'Error',
+                              ),
+                              content: Text(state.message),
+                            ),
+                          );
+                        }
+                      },
+                      builder: (context, state) {
+                        return ButtonLogin(
+                          text: "sign_up".tr(),
+                          onPressed: () {
+                            // if (formKey.currentState!.validate()) {
+                            print('object');
+                            context.read<SignUpCubit>().signUpWithFirebase(
+                                emailController.text, passwordController.text);
+                            // }
+                            print("SIGN UP👍 press");
+                          },
                         );
                       },
-                      child: Text(
-                        "sign_in".tr(),
-                        style: TextStyle(color: AppColores().mainColor),
-                      ),
-                    )
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "have_an_account?".tr(),
+                          style: TextStyle(color: AppColores().textColor),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignInScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "sign_in".tr(),
+                            style: TextStyle(color: AppColores().mainColor),
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

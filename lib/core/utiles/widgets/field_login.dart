@@ -6,6 +6,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final TextEditingController? controller;
   final TextInputType keyboardType;
+  final String? Function(String?)? validators;
 
   const CustomTextField({
     super.key,
@@ -13,6 +14,7 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.controller,
     this.keyboardType = TextInputType.text,
+    this.validators,
   });
 
   @override
@@ -26,7 +28,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-      child: TextField(
+      child: TextFormField(
+        validator: widget.validators,
         controller: widget.controller,
         obscureText: widget.isPassword ? _hideText : false,
         keyboardType: widget.keyboardType,
