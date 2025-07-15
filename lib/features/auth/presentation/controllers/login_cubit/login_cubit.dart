@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:to_do_app/features/auth/data/repository/auth_repository_implementation.dart';
-import 'package:to_do_app/features/auth/domain%20/repository/base_auth_repository.dart';
+import 'package:to_do_app/features/auth/domain/repository/base_auth_repository.dart';
 
 part 'login_state.dart';
 
@@ -10,6 +10,7 @@ class LoginCubit extends Cubit<LoginState> {
   final BaseAuthRepository base = AuthRepositoryImplementation();
 
   Future<void> signInWIthFirebase(String email, String password) async {
+    emit(LoginLoading());
     var res = await base.loginWithFirebase(email, password);
 
     res.fold(ifLeft: (value) {

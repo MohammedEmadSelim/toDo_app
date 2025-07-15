@@ -3,7 +3,7 @@ import 'package:dart_either/dart_either.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:to_do_app/features/auth/data/repository/auth_repository_implementation.dart';
-import 'package:to_do_app/features/auth/domain%20/repository/base_auth_repository.dart';
+import 'package:to_do_app/features/auth/domain/repository/base_auth_repository.dart';
 
 part 'sign_up_state.dart';
 

@@ -10,6 +10,7 @@ import 'package:to_do_app/features/auth/presentation/components/custom_auth_butt
 import 'package:to_do_app/features/auth/presentation/components/logo.dart';
 import 'package:to_do_app/features/auth/presentation/controllers/login_cubit/login_cubit.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/sign_up_screen.dart';
+import 'package:to_do_app/features/home/presentation/ui_screens/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -58,12 +59,37 @@ class LoginScreen extends StatelessWidget {
                 ),
                 BlocConsumer<LoginCubit, LoginState>(
                   listener: (context, state) {
-                    if(state is LoginFailure)
-                    {
-                      showDialog(context: context, builder: (context) => AlertDialog(
-                        title: Text('Error',),
-                        content: Text(state.message),
-                      ),);
+                    if (state is LoginFailure) {
+                      showDialog(
+                        barrierDismissible: false,
+                        // Prevents dismissing by tapping outside
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          backgroundColor: AppColors.white,
+                          title: Text(
+                            'Error',
+                            style: TextStyle(
+                                fontSize: 26, fontWeight: FontWeight.bold),
+                          ),
+                          content: Text(state.message),
+                          actions: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: CustomText(data: 'Confirm'))
+                          ],
+                        ),
+                      );
+                    }
+                    if (state is LoginSuccess) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeScreen(),
+                        ),
+                        (route) => false,
+                      );
                     }
                   },
                   builder: (context, state) {
