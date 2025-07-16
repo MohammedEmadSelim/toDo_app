@@ -112,7 +112,7 @@ class SignUpScreen extends StatelessWidget {
                           padding: WidgetStatePropertyAll(EdgeInsets.zero)),
                       child: CustomText(
                         data: 'login'.tr(),
-                        color: AppColors.bink,
+                        color: AppColors.pink,
                       ),
                       onPressed: () {
                         Navigator.push(

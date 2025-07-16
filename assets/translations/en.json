@@ -12,5 +12,11 @@
   "name_invalid": "Please enter your full name (e.g., John Doe)",
   "email_invalid": "Please enter a valid email address (e.g., user@example.com)",
   "password_invalid": "Password must be at least 8 characters long,\ninclude upper & lower case letters,\na number, and a special character.",
-  "passwords_not_match": "Passwords do not match"
+  "passwords_not_match": "Passwords do not match",
+  "add_todo": "Add TODO",
+  "title": "Title",
+  "description": "Description",
+  "deadline_optional": "Deadline (Optional)",
+  "add_image_optional": "Add Image (Optional)",
+  "add_todo_button": "Add TODO"
 }

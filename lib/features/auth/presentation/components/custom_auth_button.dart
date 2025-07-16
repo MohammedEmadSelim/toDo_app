@@ -18,7 +18,7 @@ class CustomAuthButton extends StatelessWidget {
         width: MediaQuery.of(context).size.width - 5.w,
         height: 4.h,
         decoration: BoxDecoration(
-          color: AppColors.bink,
+          color: AppColors.pink,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(

@@ -13,5 +13,11 @@
   "name_invalid": "يرجى إدخال الاسم الكامل (مثال: محمد أحمد)",
   "email_invalid": "يرجى إدخال بريد إلكتروني صالح (مثال: user@example.com)",
   "password_invalid": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل،\nوتحتوي على حرف كبير وصغير،\nورقم، وحرف خاص.",
-  "passwords_not_match": "كلمتا المرور غير متطابقتين"
+  "passwords_not_match": "كلمتا المرور غير متطابقتين",
+  "add_todo": "إضافة مهمة",
+  "title": "العنوان",
+  "description": "الوصف",
+  "deadline_optional": "الموعد النهائي (اختياري)",
+  "add_image_optional": "إضافة صورة (اختياري)",
+  "add_todo_button": "أضف المهمة"
 }

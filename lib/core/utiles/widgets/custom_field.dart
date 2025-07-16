@@ -11,13 +11,18 @@ class CustomTextFormField extends StatefulWidget {
       required this.hint,
       this.isPassword = false,
       this.keyboardType,
-       this.validators});
+      this.validators,
+      this.color,
+      this.titleColor, this.maxLines});
 
   final TextEditingController controller;
   final String hint;
   final bool? isPassword;
   final TextInputType? keyboardType;
   final String? Function(String?)? validators;
+  final Color? color;
+  final Color? titleColor;
+  final int? maxLines;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -29,11 +34,16 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator:  widget.validators,
+
+      maxLines: widget.maxLines,
+      cursorColor: widget.titleColor ?? AppColors.grey,
+      style: TextStyle(color: widget.titleColor ?? AppColors.grey),
+      validator: widget.validators,
       obscureText: isVisible,
       keyboardType: widget.keyboardType ?? TextInputType.visiblePassword,
       controller: widget.controller,
       decoration: InputDecoration(
+        hintStyle: TextStyle(color: widget.titleColor ?? AppColors.grey),
         suffixIcon: widget.isPassword!
             ? GestureDetector(
                 onTap: () {
@@ -55,14 +65,14 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: AppColors.grey,
+            color: widget.color ?? AppColors.grey,
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: AppColors.grey, // Optional: change as needed
+            color: widget.color ?? AppColors.grey,
             width: 1,
           ),
         ),

@@ -118,7 +118,7 @@ class LoginScreen extends StatelessWidget {
                           padding: WidgetStatePropertyAll(EdgeInsets.zero)),
                       child: CustomText(
                         data: 'sign_up'.tr(),
-                        color: AppColors.bink,
+                        color: AppColors.pink,
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -149,7 +149,7 @@ class HeadLineText extends StatelessWidget {
     return Text(
       data,
       style: TextStyle(
-        color: AppColors.bink,
+        color: AppColors.pink,
         fontWeight: FontWeight.w900,
         fontSize: 35,
       ),
