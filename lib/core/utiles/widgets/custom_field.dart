@@ -5,19 +5,24 @@ import 'package:to_do_app/core/responsive/responsive_extention.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 
 class CustomTextFormField extends StatefulWidget {
-  CustomTextFormField(
-      {super.key,
-      required this.controller,
-      required this.hint,
-      this.isPassword = false,
-      this.keyboardType,
-       this.validators});
+  CustomTextFormField({
+    super.key,
+    required this.controller,
+    required this.hint,
+    required this.colorx,
+    this.isPassword = false,
+    this.keyboardType,
+    this.validators,
+    this.maxlienx,
+  });
 
   final TextEditingController controller;
   final String hint;
   final bool? isPassword;
   final TextInputType? keyboardType;
   final String? Function(String?)? validators;
+  double? maxlienx = 0.5;
+  Color colorx;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -29,40 +34,41 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator:  widget.validators,
+      maxLines: widget.maxlienx?.toInt(),
+      validator: widget.validators,
       obscureText: isVisible,
       keyboardType: widget.keyboardType ?? TextInputType.visiblePassword,
       controller: widget.controller,
       decoration: InputDecoration(
-        suffixIcon: widget.isPassword!
-            ? GestureDetector(
-                onTap: () {
-                  isVisible = !isVisible;
-                  setState(() {});
-                },
-                child: SvgPicture.asset(
-                  isVisible ? IconsConstants.visible : IconsConstants.unVisible,
-                  height: 1.h,
-                  fit: BoxFit.none,
-                ),
-              )
-            : null,
+        suffixIcon:
+            widget.isPassword!
+                ? GestureDetector(
+                  onTap: () {
+                    isVisible = !isVisible;
+                    setState(() {});
+                  },
+                  child: SvgPicture.asset(
+                    isVisible
+                        ? IconsConstants.visible
+                        : IconsConstants.unVisible,
+                    height: 1.h,
+                    fit: BoxFit.none,
+                  ),
+                )
+                : null,
         hintText: widget.hint,
+        hintStyle: TextStyle(color: widget.colorx),
+        counterStyle: TextStyle(color: widget.colorx),
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: AppColors.grey,
-            width: 1,
-          ),
+          borderSide: BorderSide(color: widget.colorx, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: AppColors.grey, // Optional: change as needed
+            color: widget.colorx, 
             width: 1,
           ),
         ),

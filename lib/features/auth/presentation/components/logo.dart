@@ -78,7 +78,7 @@ class Logo extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SvgPicture.asset('assets/icons/mobile_tech.svg'),
+                SvgPicture.asset('assets/Icons/mobile_tech.svg'),
                 SizedBox(
                   height: 2.h,
                 ),

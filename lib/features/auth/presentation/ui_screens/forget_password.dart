@@ -9,12 +9,11 @@ import 'package:to_do_app/core/validator/app_validator.dart';
 import 'package:to_do_app/features/auth/presentation/components/custom_auth_button.dart';
 import 'package:to_do_app/features/auth/presentation/components/logo.dart';
 import 'package:to_do_app/features/auth/presentation/controllers/login_cubit/login_cubit.dart';
-import 'package:to_do_app/features/auth/presentation/ui_screens/forget_password.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/sign_up_screen.dart';
 import 'package:to_do_app/features/home/presentation/ui_screens/home_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class ForgetPasswordScreen extends StatelessWidget {
+  ForgetPasswordScreen({super.key});
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -43,9 +42,18 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(height: 3.h),
                 CustomTextFormField(
                   maxlienx: 1,
+                  validators: (p0) => AppValidator.emailName(p0),
+                  controller: emailController,
+                  hint: 'Password',
+                  colorx: AppColors.grey,
+                  isPassword: true,
+                ),
+                SizedBox(height: 3.h),
+                CustomTextFormField(
+                  maxlienx: 1,
                   validators: (p0) => AppValidator.passwordValidation(p0),
                   controller: passwordController,
-                  hint: 'password',
+                  hint: 'Confirm Password',
                   colorx: AppColors.grey,
                   isPassword: true,
                 ),
@@ -53,14 +61,7 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ForgetPasswordScreen(),
-                          ),
-                        );
-                      },
+                      onPressed: () {},
                       child: CustomText(data: 'forget_password'.tr()),
                     ),
                   ],
@@ -97,7 +98,7 @@ class LoginScreen extends StatelessWidget {
                           );
                         }
                       },
-                      data: 'sign_in'.tr(),
+                      data: 'CHANGE PASSWORD'.tr(),
                     );
                   },
                 ),

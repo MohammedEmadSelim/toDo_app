@@ -11,7 +11,7 @@ import 'package:to_do_app/features/auth/presentation/components/logo.dart';
 import 'package:to_do_app/features/auth/presentation/controllers/sign_up_cubit/sign_up_cubit.dart';
 
 class SignUpScreen extends StatelessWidget {
-  SignUpScreen({super.key});
+   SignUpScreen({super.key});
 
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -37,14 +37,19 @@ class SignUpScreen extends StatelessWidget {
                   height: 2.h,
                 ),
                 CustomTextFormField(
+                  maxlienx: 1,
+                  colorx: AppColors.grey,
                     validators: (value) =>
                         AppValidator.validateName(value ?? ''),
                     controller: fullNameController,
                     hint: 'full_name'.tr()),
+                    
                 SizedBox(
                   height: 1.h,
                 ),
                 CustomTextFormField(
+                  maxlienx: 1,
+                  colorx: AppColors.grey,
                     validators: (value) => AppValidator.emailName(value),
                     controller: emailController,
                     hint: 'email'.tr()),
@@ -52,6 +57,8 @@ class SignUpScreen extends StatelessWidget {
                   height: 1.h,
                 ),
                 CustomTextFormField(
+                  maxlienx: 1,
+                  colorx: AppColors.grey,
                   validators: (value) => AppValidator.passwordValidation(value),
                   controller: passwordController,
                   hint: 'password'.tr(),
@@ -61,6 +68,8 @@ class SignUpScreen extends StatelessWidget {
                   height: 1.h,
                 ),
                 CustomTextFormField(
+                  maxlienx: 1,
+                  colorx: AppColors.grey,
                   validators: (value) => AppValidator.passwordConfirmValidation(
                       value, passwordController.text),
                   controller: confirmPasswordController,
