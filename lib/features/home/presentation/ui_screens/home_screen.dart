@@ -201,7 +201,7 @@ class AddToDoWidet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [SvgPicture.asset('assets/Icons/Rectangle 18.svg')],
           ),
-          //Rectangle 18.svg
+          
           SizedBox(height: 2.h),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: (12.0)),
@@ -350,7 +350,7 @@ class _photoWidgetState extends State<photoWidget> {
                       data: ThemeData.light().copyWith(
                         colorScheme: ColorScheme.light(
                           primary: Colors.pink,
-                          surface: AppColors.bink, // ← دا المهم
+                          surface: AppColors.bink, 
                           onPrimary: Colors.white,
                           onSurface: Colors.white,
                         ),
