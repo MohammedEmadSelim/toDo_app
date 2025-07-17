@@ -1,11 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_app/core/responsive/responsive_extention.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/custom_field.dart';
 import 'package:to_do_app/core/utiles/widgets/custom_text.dart';
 import 'package:to_do_app/core/utiles/widgets/tap_effect.dart';
+import 'package:to_do_app/features/home/controllers/add_to_do/cubit/add_to_do_cubit.dart';
 import 'package:to_do_app/features/home/presentation/components/custome_home_appbar.dart';
 import 'package:to_do_app/features/to_do_details/presentation/ui_screens/Details_screen.dart';
 
@@ -157,7 +159,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         context: context,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         isScrollControlled: true,
-                        builder: (context) => AddToDoWidet(),
+                        builder:
+                            (context) => BlocProvider.value(
+                              value: context.read<AddToDoCubit>(),
+                              child: AddToDoWidet(),
+                            ),
                       );
                     },
                     child: CircleAvatar(
@@ -183,7 +189,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class AddToDoWidet extends StatelessWidget {
   AddToDoWidet({super.key});
-  final TextEditingController textEditingController = TextEditingController();
+  final TextEditingController titleTextEditingController =
+      TextEditingController();
+  final TextEditingController descriptionTextEditingController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -201,20 +211,20 @@ class AddToDoWidet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [SvgPicture.asset('assets/Icons/Rectangle 18.svg')],
           ),
-          
+
           SizedBox(height: 2.h),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: (12.0)),
             child: CustomTextFormField(
               colorx: AppColors.white,
-              controller: TextEditingController(),
+              controller: titleTextEditingController,
               hint: 'Design UI App',
               maxlienx: 1,
             ),
           ),
           SizedBox(height: 2.h),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: (12)),
+            padding: const EdgeInsets.symmetric(horizontal: (12.0)),
             child: CustomTextFormField(
               maxlienx: 14,
               colorx: AppColors.white,
@@ -224,7 +234,7 @@ class AddToDoWidet extends StatelessWidget {
           ),
           SizedBox(height: 2.h),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: (12)),
+            padding: const EdgeInsets.symmetric(horizontal: (12.0)),
             child: DateWidget(),
           ),
           SizedBox(height: 2.h),
@@ -233,7 +243,28 @@ class AddToDoWidet extends StatelessWidget {
             child: photoWidget(),
           ),
           SizedBox(height: 2.h),
-          CustomButton(data: 'ADD TODO'),
+          BlocConsumer<AddToDoCubit, AddToDoState>(
+            listener: (context, state) {
+              if (state is AddToDoSuccess) {
+                Navigator.pop(context);
+                print("ADDING TO FIREBASE...");
+              } else if (state is AddToDoFailure) {
+                print(state.error);
+              }
+            },
+            builder: (context, state) {
+              return CustomButton(
+                data: 'ADD TODO',
+                onTap: () {
+                  context.read<AddToDoCubit>().addToDo(
+                    titleTextEditingController.text,
+                    descriptionTextEditingController.text,
+                    DateWidget().initialDateTitle as DateTime,
+                  );
+                },
+              );
+            },
+          ),
         ],
       ),
     );
@@ -241,14 +272,22 @@ class AddToDoWidet extends StatelessWidget {
 }
 
 class DateWidget extends StatefulWidget {
-  const DateWidget({super.key});
+  final String? initialDateTitle;
+
+  const DateWidget({super.key, this.initialDateTitle});
 
   @override
-  State<DateWidget> createState() => _DateWidgetState();
+  State<DateWidget> createState() => DateWidgetState();
 }
 
-class _DateWidgetState extends State<DateWidget> {
-  String dateTitle = 'deadline_optional'.tr();
+class DateWidgetState extends State<DateWidget> {
+  late String dateTitle;
+
+  @override
+  void initState() {
+    super.initState();
+    dateTitle = widget.initialDateTitle ?? 'deadline_optional'.tr();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -350,7 +389,7 @@ class _photoWidgetState extends State<photoWidget> {
                       data: ThemeData.light().copyWith(
                         colorScheme: ColorScheme.light(
                           primary: Colors.pink,
-                          surface: AppColors.bink, 
+                          surface: AppColors.bink,
                           onPrimary: Colors.white,
                           onSurface: Colors.white,
                         ),
@@ -389,14 +428,16 @@ class _photoWidgetState extends State<photoWidget> {
 }
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.data});
+  final VoidCallback onTap;
+
+  const CustomButton({super.key, required this.data, required this.onTap});
 
   final String data;
 
   @override
   Widget build(BuildContext context) {
     return TapEffect(
-      onClick: () {},
+      onClick: onTap,
       child: Container(
         width: MediaQuery.of(context).size.width - 5.w,
         height: 6.h,
