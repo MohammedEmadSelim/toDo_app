@@ -6,7 +6,7 @@ import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/custom_field.dart';
 import 'package:to_do_app/core/utiles/widgets/custom_text.dart';
 import 'package:to_do_app/core/validator/app_validator.dart';
-import 'package:to_do_app/features/auth/presentation/components/custom_auth_button.dart';
+import 'package:to_do_app/core/utiles/widgets/custom_auth_button.dart';
 import 'package:to_do_app/features/auth/presentation/components/logo.dart';
 import 'package:to_do_app/features/auth/presentation/controllers/sign_up_cubit/sign_up_cubit.dart';
 
@@ -82,7 +82,7 @@ class SignUpScreen extends StatelessWidget {
                       }
                   },
                   builder: (context, state) {
-                    return CustomAuthButton(
+                    return CustomButton(
                       data: 'sign_up',
                       onTap: () {
                         //jkn

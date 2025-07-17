@@ -6,10 +6,11 @@ import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/custom_field.dart';
 import 'package:to_do_app/core/utiles/widgets/custom_text.dart';
 import 'package:to_do_app/core/validator/app_validator.dart';
-import 'package:to_do_app/features/auth/presentation/components/custom_auth_button.dart';
+import 'package:to_do_app/core/utiles/widgets/custom_auth_button.dart';
 import 'package:to_do_app/features/auth/presentation/components/logo.dart';
 import 'package:to_do_app/features/auth/presentation/controllers/login_cubit/login_cubit.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/sign_up_screen.dart';
+import 'package:to_do_app/features/home/presentation/controllers/get_todo/get_todo_cubit.dart';
 import 'package:to_do_app/features/home/presentation/ui_screens/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -64,36 +65,41 @@ class LoginScreen extends StatelessWidget {
                         barrierDismissible: false,
                         // Prevents dismissing by tapping outside
                         context: context,
-                        builder: (context) => AlertDialog(
-                          backgroundColor: AppColors.white,
-                          title: Text(
-                            'Error',
-                            style: TextStyle(
-                                fontSize: 26, fontWeight: FontWeight.bold),
-                          ),
-                          content: Text(state.message),
-                          actions: [
-                            ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: CustomText(data: 'Confirm'))
-                          ],
-                        ),
+                        builder: (context) =>
+                            AlertDialog(
+                              backgroundColor: AppColors.white,
+                              title: Text(
+                                'Error',
+                                style: TextStyle(
+                                    fontSize: 26, fontWeight: FontWeight.bold),
+                              ),
+                              content: Text(state.message),
+                              actions: [
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: CustomText(data: 'Confirm'))
+                              ],
+                            ),
                       );
                     }
                     if (state is LoginSuccess) {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HomeScreen(),
+                          builder: (context) =>
+                              BlocProvider(
+                                create: (context) => GetTodoCubit(),
+                                child: HomeScreen(),
+                              ),
                         ),
-                        (route) => false,
+                            (route) => false,
                       );
                     }
                   },
                   builder: (context, state) {
-                    return CustomAuthButton(
+                    return CustomButton(
                       onTap: () {
                         if (formKey.currentState!.validate()) {
                           context.read<LoginCubit>().signInWIthFirebase(
