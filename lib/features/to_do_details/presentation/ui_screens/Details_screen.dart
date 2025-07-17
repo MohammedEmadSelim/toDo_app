@@ -8,8 +8,10 @@ import 'package:to_do_app/core/utiles/widgets/custom_text.dart';
 import 'package:to_do_app/core/utiles/widgets/tap_effect.dart';
 import 'dart:ui';
 
+import 'package:to_do_app/features/home/data/models/to_do_model.dart';
+
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key});
+  const DetailsScreen({super.key, required ToDoModel todo});
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +175,7 @@ class EditToDoWidet extends StatelessWidget {
             child: photoWidget(),
           ),
           SizedBox(height: 2.h),
-          CustomButton(data: 'ADD TODO'),
+          CustomButton(data: 'ADD TODO', onClick: () {  },),
         ],
       ),
     );
@@ -329,7 +331,7 @@ class _photoWidgetState extends State<photoWidget> {
 }
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.data});
+  const CustomButton({super.key, required this.data, required Null Function() onClick});
 
   final String data;
 
@@ -379,10 +381,10 @@ class DeleteToDoWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CustomButton(data: 'Delete TODO'),
+            child: CustomButton(data: 'Delete TODO', onClick: () {  },),
           ),
           SizedBox(height: 2.h),
-          CustomButton(data: 'Cancel'),
+          CustomButton(data: 'Cancel', onClick: () {  },),
           SizedBox(height: 4.h),
         ],
       ),

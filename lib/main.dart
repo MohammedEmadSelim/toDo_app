@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app/core/bloc_observer/bloc_observer.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/login_screen.dart';
 import 'package:to_do_app/features/home/controllers/add_to_do/cubit/add_to_do_cubit.dart';
+import 'package:to_do_app/features/home/controllers/get_to_do_list/cubit/get_to_do_list_cubit.dart';
 import 'package:to_do_app/firebase_options.dart';
 
 void main() async {
@@ -18,9 +19,12 @@ void main() async {
       supportedLocales: [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       fallbackLocale: Locale('en', 'US'),
-      child: MultiBlocProvider( 
+      child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => AddToDoCubit()),
+          BlocProvider(
+            create: (_) => GetToDoListCubit(),
+          ), 
         ],
         child: const MyApp(),
       ),
@@ -38,7 +42,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-
+      debugShowCheckedModeBanner: false, 
       home: LoginScreen(),
     );
   }

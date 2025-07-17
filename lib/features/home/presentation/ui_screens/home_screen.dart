@@ -5,10 +5,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_app/core/responsive/responsive_extention.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
 import 'package:to_do_app/core/utiles/widgets/custom_field.dart';
-import 'package:to_do_app/core/utiles/widgets/custom_text.dart';
+
 import 'package:to_do_app/core/utiles/widgets/tap_effect.dart';
 import 'package:to_do_app/features/home/controllers/add_to_do/cubit/add_to_do_cubit.dart';
+import 'package:to_do_app/features/home/controllers/get_to_do_list/cubit/get_to_do_list_cubit.dart';
 import 'package:to_do_app/features/home/presentation/components/custome_home_appbar.dart';
+import 'package:to_do_app/features/home/presentation/components/date_widget.dart';
+
 import 'package:to_do_app/features/to_do_details/presentation/ui_screens/Details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,7 +21,17 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+String _formatDate(DateTime date) {
+  return DateFormat('dd MMM yyyy').format(date);
+}
+
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    context.read<GetToDoListCubit>().getTodoList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,98 +45,134 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(height: 2.h),
                   CustomHomeAppBar(),
                   SizedBox(height: 7.h),
-                  Expanded(
-                    child: ListView.separated(
-                      itemBuilder:
-                          (context, index) => GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DetailsScreen(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              height: 20.h,
-                              decoration: BoxDecoration(
-                                color: AppColors.bink,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0,
-                                    ),
-
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'Design UI App',
-                                          style: TextStyle(
-                                            color: AppColors.white,
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(width: 35.w),
-                                        SizedBox(
-                                          height: 6.h,
-                                          width: 6.w,
-                                          child: SvgPicture.asset(
-                                            'assets/Icons/clock.svg',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-
-                                  SizedBox(height: 1.5.h),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Make To-DO UI Design for  NTI .',
-                                          style: TextStyle(
-                                            color: AppColors.white,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 4.h),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 8.0,
-                                        ),
-                                        child: Text(
-                                          'Created at 1 Sept 2021',
-                                          style: TextStyle(
-                                            color: AppColors.white,
-                                            fontSize: 15,
-                                          ),
-                                        ),
+                  BlocConsumer<GetToDoListCubit, GetToDoListState>(
+                    listener: (context, state) {
+                      
+                    },
+                    builder: (context, state) {
+                      if (state is GetTodoLoading) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      if (state is GetTodoSuccess) {
+                        return Expanded(
+                          child: ListView.separated(
+                            itemBuilder:
+                                (context, index) => GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => DetailsScreen(
+                                              todo:
+                                                  state
+                                                      .todos[index], 
+                                            ),
                                       ),
-                                    ],
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 20.h,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.bink,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  state.todos[index].title,
+                                                  style: TextStyle(
+                                                    color: AppColors.white,
+                                                    fontSize: 25,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              SizedBox(width: 10.w),
+                                              SizedBox(
+                                                height: 6.h,
+                                                width: 6.w,
+                                                child: SvgPicture.asset(
+                                                  'assets/Icons/clock.svg',
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 1.5.h),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  state
+                                                      .todos[index]
+                                                      .description,
+                                                  style: TextStyle(
+                                                    color: AppColors.white,
+                                                    fontSize: 15,
+                                                  ),
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 4.h),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                left: 8.0,
+                                              ),
+                                              child: Text(
+                                                'Created at ${_formatDate(state.todos[index].date)}',
+                                                style: TextStyle(
+                                                  color: AppColors.white,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
-                            ),
+                                ),
+                            separatorBuilder:
+                                (context, index) => SizedBox(height: 2.h),
+                            itemCount: state.todos.length,
                           ),
-                      separatorBuilder:
-                          (context, index) => SizedBox(height: 2.h),
-                      itemCount: 2,
-                    ),
+                        );
+                      }
+                      if (state is GetTodoFailure) {
+                        return Center(
+                          child: Text(
+                            'Error: ${state.message}',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        );
+                      }
+                      return Container();
+                    },
                   ),
                 ],
               ),
@@ -187,18 +236,24 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class AddToDoWidet extends StatelessWidget {
-  AddToDoWidet({super.key});
+class AddToDoWidet extends StatefulWidget {
+  const AddToDoWidet({super.key});
+
+  @override
+  State<AddToDoWidet> createState() => _AddToDoWidetState();
+}
+
+class _AddToDoWidetState extends State<AddToDoWidet> {
   final TextEditingController titleTextEditingController =
       TextEditingController();
   final TextEditingController descriptionTextEditingController =
       TextEditingController();
+  final GlobalKey<DateWidgetState> dateKey = GlobalKey<DateWidgetState>();
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 85.h,
-
       decoration: BoxDecoration(
         color: AppColors.lightbink,
         borderRadius: BorderRadius.circular(12),
@@ -206,12 +261,10 @@ class AddToDoWidet extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 2.h),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [SvgPicture.asset('assets/Icons/Rectangle 18.svg')],
           ),
-
           SizedBox(height: 2.h),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: (12.0)),
@@ -226,22 +279,18 @@ class AddToDoWidet extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: (12.0)),
             child: CustomTextFormField(
-              maxlienx: 14,
+              maxlienx: 17,
               colorx: AppColors.white,
-              controller: TextEditingController(),
+              controller: descriptionTextEditingController,
               hint: 'Design UI App',
             ),
           ),
           SizedBox(height: 2.h),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: (12.0)),
-            child: DateWidget(),
+            child: CustomeDateWidget(key: dateKey),
           ),
-          SizedBox(height: 2.h),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: (12)),
-            child: photoWidget(),
-          ),
+
           SizedBox(height: 2.h),
           BlocConsumer<AddToDoCubit, AddToDoState>(
             listener: (context, state) {
@@ -255,204 +304,22 @@ class AddToDoWidet extends StatelessWidget {
             builder: (context, state) {
               return CustomButton(
                 data: 'ADD TODO',
-                onTap: () {
+                onClick: () {
+                  final selectedDate = dateKey.currentState?.selectedDate;
+                  final timestamp =
+                      selectedDate != null
+                          ? selectedDate.millisecondsSinceEpoch
+                          : DateTime.now().millisecondsSinceEpoch;
                   context.read<AddToDoCubit>().addToDo(
                     titleTextEditingController.text,
                     descriptionTextEditingController.text,
-                    DateWidget().initialDateTitle as DateTime,
+                    DateTime.fromMillisecondsSinceEpoch(timestamp),
                   );
                 },
               );
             },
           ),
         ],
-      ),
-    );
-  }
-}
-
-class DateWidget extends StatefulWidget {
-  final String? initialDateTitle;
-
-  const DateWidget({super.key, this.initialDateTitle});
-
-  @override
-  State<DateWidget> createState() => DateWidgetState();
-}
-
-class DateWidgetState extends State<DateWidget> {
-  late String dateTitle;
-
-  @override
-  void initState() {
-    super.initState();
-    dateTitle = widget.initialDateTitle ?? 'deadline_optional'.tr();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 6.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.white),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 1.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CustomText(data: dateTitle, color: AppColors.white),
-            IconButton(
-              onPressed: () async {
-                final DateTime? date = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2100),
-                  initialDate: DateTime.now(),
-                  builder: (BuildContext context, Widget? child) {
-                    return Theme(
-                      data: ThemeData.light().copyWith(
-                        colorScheme: ColorScheme.light(
-                          primary: Colors.pink,
-                          surface: AppColors.bink, // ← دا المهم
-                          onPrimary: Colors.white,
-                          onSurface: Colors.white,
-                        ),
-                        textButtonTheme: TextButtonThemeData(
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                          ),
-                        ),
-                        datePickerTheme: DatePickerThemeData(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          dayStyle: TextStyle(color: Colors.white),
-                          todayBackgroundColor: WidgetStateProperty.all(
-                            Colors.pink.shade100,
-                          ),
-                        ),
-                      ),
-                      child: child!,
-                    );
-                  },
-                );
-                setState(() {
-                  if (date != null) {
-                    dateTitle = DateFormat('dd MMMM yyyy').format(date);
-                  }
-                });
-              },
-              icon: Icon(Icons.calendar_today_outlined, color: AppColors.white),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class photoWidget extends StatefulWidget {
-  const photoWidget({super.key});
-
-  @override
-  State<photoWidget> createState() => _photoWidgetState();
-}
-
-class _photoWidgetState extends State<photoWidget> {
-  String dateTitle = 'deadline_optional'.tr();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 6.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.white),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 1.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CustomText(data: dateTitle, color: AppColors.white),
-            IconButton(
-              onPressed: () async {
-                final DateTime? date = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2100),
-                  initialDate: DateTime.now(),
-                  builder: (BuildContext context, Widget? child) {
-                    return Theme(
-                      data: ThemeData.light().copyWith(
-                        colorScheme: ColorScheme.light(
-                          primary: Colors.pink,
-                          surface: AppColors.bink,
-                          onPrimary: Colors.white,
-                          onSurface: Colors.white,
-                        ),
-                        textButtonTheme: TextButtonThemeData(
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                          ),
-                        ),
-                        datePickerTheme: DatePickerThemeData(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          dayStyle: TextStyle(color: Colors.white),
-                          todayBackgroundColor: WidgetStateProperty.all(
-                            Colors.pink.shade100,
-                          ),
-                        ),
-                      ),
-                      child: child!,
-                    );
-                  },
-                );
-                setState(() {
-                  if (date != null) {
-                    dateTitle = DateFormat('dd MMMM yyyy').format(date);
-                  }
-                });
-              },
-              icon: Icon(Icons.photo_outlined, color: AppColors.white),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CustomButton extends StatelessWidget {
-  final VoidCallback onTap;
-
-  const CustomButton({super.key, required this.data, required this.onTap});
-
-  final String data;
-
-  @override
-  Widget build(BuildContext context) {
-    return TapEffect(
-      onClick: onTap,
-      child: Container(
-        width: MediaQuery.of(context).size.width - 5.w,
-        height: 6.h,
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Center(
-          child: CustomText(
-            color: AppColors.bink,
-            data: data,
-            fontWeight: FontWeight.w500,
-            fontSize: 16,
-          ),
-        ),
       ),
     );
   }

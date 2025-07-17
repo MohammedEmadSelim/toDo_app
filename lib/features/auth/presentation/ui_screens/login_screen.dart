@@ -138,21 +138,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
-class HeadLineText extends StatelessWidget {
-  const HeadLineText({super.key, required this.data});
-
-  final String data;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      data,
-      style: TextStyle(
-        color: AppColors.bink,
-        fontWeight: FontWeight.w900,
-        fontSize: 35,
-      ),
-    );
-  }
-}
