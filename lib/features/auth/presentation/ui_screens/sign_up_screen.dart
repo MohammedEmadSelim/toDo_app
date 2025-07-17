@@ -4,7 +4,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:to_do_app/core/responsive/responsive_extention.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
+import 'package:to_do_app/core/themes/svg_icon.dart';
 import 'package:to_do_app/core/utiles/widgets/button_login.dart';
 import 'package:to_do_app/core/utiles/widgets/field_login.dart';
 import 'package:to_do_app/core/validator/app_validator.dart';
@@ -59,9 +61,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 key: formKey,
                 child: Column(
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-                    SvgPicture.asset("assets/logo.svg"),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                    SizedBox(height: 5.h),
+                    SvgPicture.asset(
+                      SvgIcon.logo,
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
                     CustomTextField(
                       labelText: 'email'.tr(),
                       keyboardType: TextInputType.emailAddress,
@@ -92,7 +98,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     BlocConsumer<SignUpCubit, SignUpState>(
                       listener: (context, state) {
-                        // TODO: implement listener
                         if (state is SignUpFailure) {
                           showDialog(
                             context: context,
@@ -137,7 +142,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           child: Text(
                             "sign_in".tr(),
-                            style: TextStyle(color: AppColores().mainColor),
+                            style: TextStyle(color: AppColores().pink),
                           ),
                         )
                       ],

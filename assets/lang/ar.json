@@ -8,5 +8,8 @@
     "full_name":"الاسم بالكامل",
     "confirm_Password":" تاكيد كلمه السر",
     "have_an_account?":"هل ليك حساب ؟",
-    "change_password":"تغير كلمه السر"
+    "change_password":"تغير كلمه السر",
+    "email_invalid":"الايميل غير صحيح",
+    "password_invalid":"كلمه السر غير صحيحه"
+
 }

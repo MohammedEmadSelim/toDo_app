@@ -3,13 +3,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:to_do_app/core/responsive/responsive_extention.dart';
 import 'package:to_do_app/core/themes/app_colores.dart';
+import 'package:to_do_app/core/themes/svg_icon.dart';
 import 'package:to_do_app/core/utiles/widgets/button_login.dart';
 import 'package:to_do_app/core/utiles/widgets/field_login.dart';
+import 'package:to_do_app/core/utiles/widgets/show_dialog.dart';
 import 'package:to_do_app/core/validator/app_validator.dart';
 import 'package:to_do_app/features/auth/presentation/components/custom_app_bar.dart';
 import 'package:to_do_app/features/auth/presentation/controllers/sign_in_cubit/sign_in_cubit.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/forget_pas_screen.dart';
+import 'package:to_do_app/features/home/ui_screens/home_page_screen.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/sign_up_screen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -59,8 +64,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 key: formKey,
                 child: Column(
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                    Image.asset("assets/logo.png"),
+                    SizedBox(height: 1.h),
+                    SvgPicture.asset(
+                      SvgIcon.logo,
+                    ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                     CustomTextField(
                       labelText: 'email',
@@ -72,6 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       labelText: 'password',
                       isPassword: true,
                       controller: passwordController,
+                      validators: (p0) => AppValidator.passwordValidation(p0),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -95,14 +103,21 @@ class _SignInScreenState extends State<SignInScreen> {
                     BlocConsumer<SignInCubit, SignInState>(
                       listener: (context, state) {
                         if (state is SignFailure) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text(
-                                'Error',
-                              ),
-                              content: Text(state.message),
+                          ErrorDialog(
+                            title: "Errodddr",
+                            message: "The email and password are incorrect.",
+                            onConfirm: () {
+                              Navigator.pop(context);
+                            },
+                          );
+                        }
+                        if (state is SignInState) {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomePageScreen(),
                             ),
+                            (route) => false,
                           );
                         }
                       },
@@ -136,7 +151,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           },
                           child: Text(
                             "sign_up".tr(),
-                            style: TextStyle(color: AppColores().mainColor),
+                            style: TextStyle(color: AppColores().pink),
                           ),
                         )
                       ],

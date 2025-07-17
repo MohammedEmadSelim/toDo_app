@@ -1,5 +1,4 @@
 import 'package:dart_either/dart_either.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:to_do_app/features/auth/domain/repository/base_auth_repository.dart';
 

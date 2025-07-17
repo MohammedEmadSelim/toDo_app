@@ -1,7 +1,9 @@
-// import 'package:to_do_app/core/responsive/responsice_calculation.dart';
+// ignore_for_file: unnecessary_this
 
-// extension ResponsiveExtention on num {
-//   double get h => ResponsiveCalculation.calculateHeight(this.toDouble());
+import 'package:to_do_app/core/responsive/responsice_calculation.dart';
 
-//   double get w => ResponsiveCalculation.calculateWidth(this.toDouble());
-// }
+extension ResponsiveExtention on num {
+  double get h => ResponsiveCalculation.calculateHeight(this.toDouble());
+
+  double get w => ResponsiveCalculation.calculateWidth(this.toDouble());
+}

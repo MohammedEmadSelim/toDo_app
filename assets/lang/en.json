@@ -8,5 +8,7 @@
     "full_name":"Full Name",
     "confirm_Password":"Confirm Password",
     "have_an_account?":"Have an account?",
-    "change_password":"CHANGE PASSWORD"
+    "change_password":"CHANGE PASSWORD",
+    "email_invalid":"ُُEmail Invalid",
+    "password_invalid":"Password Invalid"
 }

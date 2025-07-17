@@ -28,7 +28,7 @@ class LanguageSwitch extends StatelessWidget {
           activeColor: AppColores().background,
           activeTrackColor: AppColores().grean,
           inactiveThumbColor: AppColores().background,
-          inactiveTrackColor: AppColores().mainColor,
+          inactiveTrackColor: AppColores().pink,
         ),
         Padding(
           padding: const EdgeInsets.only(right: 12),

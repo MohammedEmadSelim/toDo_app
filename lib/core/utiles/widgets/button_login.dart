@@ -23,7 +23,7 @@ class ButtonLogin extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 15),
           decoration: BoxDecoration(
-            color: AppColores().mainColor,
+            color: AppColores().pink,
             borderRadius: BorderRadius.circular(12),
           ),
           alignment: Alignment.center,
