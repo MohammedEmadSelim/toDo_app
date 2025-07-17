@@ -6,20 +6,18 @@ import 'package:to_do_app/core/bloc_observer/bloc_observer.dart';
 import 'package:to_do_app/features/auth/presentation/ui_screens/login_screen.dart';
 import 'package:to_do_app/firebase_options.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   Bloc.observer = MyBlocObserver();
-  await  Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
     EasyLocalization(
-        supportedLocales: [Locale('en'), Locale('ar')],
-        path: 'assets/translations', 
-        fallbackLocale: Locale('en', 'US'),
-        child: MyApp()
+      supportedLocales: [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      fallbackLocale: Locale('en', 'US'),
+      child: MyApp(),
     ),
   );
 }
@@ -35,8 +33,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
 
-      home:LoginScreen(),
+      home: LoginScreen(),
     );
   }
 }
-

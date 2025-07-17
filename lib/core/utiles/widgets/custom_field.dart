@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:to_do_app/core/constants/icons_constants.dart';
 import 'package:to_do_app/core/responsive/responsive_extention.dart';
-import 'package:to_do_app/core/themes/app_colores.dart';
 
 class CustomTextFormField extends StatefulWidget {
   CustomTextFormField({

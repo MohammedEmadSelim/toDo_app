@@ -230,7 +230,7 @@ class _DateWidgetState extends State<DateWidget> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           dayStyle: TextStyle(color: Colors.white),
-                          todayBackgroundColor: MaterialStateProperty.all(
+                          todayBackgroundColor: WidgetStateProperty.all(
                             Colors.pink.shade100,
                           ),
                         ),
@@ -304,7 +304,7 @@ class _photoWidgetState extends State<photoWidget> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           dayStyle: TextStyle(color: Colors.white),
-                          todayBackgroundColor: MaterialStateProperty.all(
+                          todayBackgroundColor: WidgetStateProperty.all(
                             Colors.pink.shade100,
                           ),
                         ),

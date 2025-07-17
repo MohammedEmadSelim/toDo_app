@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ),
                                         SizedBox(width: 35.w),
-                                        Container(
+                                        SizedBox(
                                           height: 6.h,
                                           width: 6.w,
                                           child: SvgPicture.asset(
@@ -290,7 +290,7 @@ class _DateWidgetState extends State<DateWidget> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           dayStyle: TextStyle(color: Colors.white),
-                          todayBackgroundColor: MaterialStateProperty.all(
+                          todayBackgroundColor: WidgetStateProperty.all(
                             Colors.pink.shade100,
                           ),
                         ),
@@ -364,7 +364,7 @@ class _photoWidgetState extends State<photoWidget> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           dayStyle: TextStyle(color: Colors.white),
-                          todayBackgroundColor: MaterialStateProperty.all(
+                          todayBackgroundColor: WidgetStateProperty.all(
                             Colors.pink.shade100,
                           ),
                         ),
